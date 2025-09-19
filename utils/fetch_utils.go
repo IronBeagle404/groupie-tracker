@@ -6,10 +6,8 @@ import (
 	"groupie-tracker/config"
 	"groupie-tracker/data"
 	"groupie-tracker/models"
-	"log"
 	"net/http"
 	"sync"
-	"text/template"
 )
 
 // Fetch all data from API
@@ -50,18 +48,7 @@ func FetchAllData() (models.CombinedData, error) {
 	}, nil
 }
 
-func ParseTemplates() {
-	var err error
-	funcMap := template.FuncMap{
-		"add": func(a, b int) int { return a + b },
-	}
-	data.Templates, err = template.New("").Funcs(funcMap).ParseGlob("./assets/templates/*.html")
-	if err != nil {
-		log.Printf("Error parsing templates : %v", err)
-	}
-}
-
-func FetchArtist(id int) models.Artist {
+func FetchArtist(id int) (models.Artist, error) {
 	var artist models.Artist
 
 	for _, v := range data.Artists {
@@ -73,6 +60,11 @@ func FetchArtist(id int) models.Artist {
 			artist.Members = v.Members
 			artist.Name = v.Name
 		}
+	}
+
+	if len(artist.Name) == 0 {
+		err := fmt.Errorf("no artist with ID %v", id)
+		return artist, err
 	}
 
 	var location models.Location
@@ -99,5 +91,5 @@ func FetchArtist(id int) models.Artist {
 	artist.Location = location
 	artist.Date = date
 	artist.Relation = relation
-	return artist
+	return artist, nil
 }

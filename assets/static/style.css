@@ -184,7 +184,7 @@ h1 {
     }
 }
 
-/* Tablet */
+/* Tablette */
 @media (max-width: 768px) {
     .artists-grid {
         gap: 40px;

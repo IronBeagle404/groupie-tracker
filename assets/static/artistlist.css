@@ -32,24 +32,48 @@ body {
 * { scrollbar-width: thin; scrollbar-color: #FF6600 transparent; }
 
 /* Header */
-.title-container {
+.header {
     position: fixed;
-    text-align: center;
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
+    width: calc(100vw - 100px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     z-index: 1000;
+    gap: 40px;
+}
+
+/* Ligne et rectangle orange sous le header */
+.header::before {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100vw - 100px);
+    height: 3px;
+    background-color: #FF6600;
+}
+
+/* Titre */
+.title-container {
+    position: static;
+    transform: none;
 }
 
 h1 {
     font-weight: 900;
     color: white;
-    font-size: 4.5em;
+    font-size: 4em;
     margin: 0 0 10px 0;
     text-transform: uppercase;
     letter-spacing: 2px;
-    text-align: center;
-    white-space: nowrap;
+    text-align: left;
+    white-space: normal;
+    word-break: break-word;
+    max-width: 100%;
     cursor: pointer;
     display: inline-block;
     transition: all 0.3s ease;
@@ -57,27 +81,111 @@ h1 {
 
 h1:hover { transform: scale(1.03); }
 
-/* Header Separation */
-.title-container::before {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100vw - 150px);
-    height: 3px;
-    background-color: #FF6600;
+/* Search bar */
+.search-bar form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.title-container::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 600px;
-    height: 10px;
+.search-bar input {
+    padding: 8px 12px;
+    border-radius: 15px;
+    border: 2px solid #FF6600;
+    outline: none;
+    font-size: 1em;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    width: 300px;
+    height: 15px;
+}
+
+.search-bar input::placeholder {
+    color: #ccc;
+}
+
+.search-bar button {
+    padding: 8px 15px;
+    border-radius: 15px;
+    border: none;
     background-color: #FF6600;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 80px;
+    height: 30px;
+    font-size: 1em;
+}
+
+.search-bar button:hover {
+    background-color: #8A2BE2;
+    transform: scale(1.05);
+}
+
+/* Option icon */
+.option-icon {
+    display: none;
+    cursor: pointer;
+    color: white;
+}
+
+.option-icon img {
+    width: 70px;
+    height: auto;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    backdrop-filter: blur(8px);
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+/* Modal est le pannel issue du dérouler */
+.modal {
+    background: rgba(20,20,20,0.9);
+    background: transparent;
+    padding: 20px;
+    border-radius: 15px;
+    border: none;
+    width: 90%;
+    max-width: 450px;
+    text-align: center;
+}
+
+.modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal input {
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #FF6600;
+    outline: none;
+    background: rgba(0,0,0,0.6);
+    color: white;
+}
+
+.modal button {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background-color: #FF6600;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.modal button:hover {
+    background-color: #8A2BE2;
 }
 
 /* Artist grid */
@@ -97,13 +205,103 @@ h1:hover { transform: scale(1.03); }
     box-sizing: border-box;
 }
 
+.placeholder-container {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    text-align: center;
+    margin: 0 auto;
+    border: 2px solid #FF6600;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 2em 1em;
+    gap: 1.5em;
+}
+
+.placeholder-content h3 {
+    font-family: 'Agrandir', Arial, sans-serif;
+    font-weight: 900;
+    color: white;
+    font-size: clamp(1.2rem, 3vw, 2em);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0 0 20px 0;
+    position: relative;
+}
+
+.placeholder-content h3::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -5px;
+    height: 2px;
+    background-color: #FF6600;
+    width: 90%;
+}
+
+.placeholder-image {
+    text-align: center;
+    margin-top: 60px;
+}
+
+.placeholder-image img {
+    max-width: 65%;
+    height: auto;
+    display: inline-block;
+}
+
+.return {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 102, 0, 0.6);
+    border: 2px solid #FF6600;
+    border-radius: 15px;
+    color: white;
+    padding: 10px 30px;
+    font-family: 'Agrandir', Arial, sans-serif;
+    font-weight: 600;
+    font-size: 1em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+    text-align: center;
+    line-height: normal;
+    margin: 30px auto 0;
+    margin-bottom: 25px;
+}
+
+.return-text {
+    line-height: 1.2;
+}
+
+.return:hover {
+    transform: scale(1.05);
+    background: rgba(138, 43, 226, 0.6);
+    border: 2px solid #8A2BE2;
+    box-shadow: 0 8px 25px rgba(138, 43, 226, 0.4);
+}
+
 .artists-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     margin-top: 10px;
-    gap: 50px 30px;
+    gap: 30px 30px;
     max-width: 1650px;
+}
+
+.artists-grid.few-cards {
+    flex-wrap: nowrap;
+    justify-content: center;
 }
 
 /* Artist card */
@@ -123,7 +321,6 @@ h1:hover { transform: scale(1.03); }
     box-sizing: border-box;
     cursor: pointer;
 }
-
 .artist-card:hover {
     transform: scale(1.05);
     background: rgba(138, 43, 226, 0.6);
@@ -143,7 +340,6 @@ h1:hover { transform: scale(1.03); }
     overflow: hidden;
     background-color: #FF6600;
 }
-
 .artist-info h3 {
     color: white;
     font-weight: 900;
@@ -151,7 +347,6 @@ h1:hover { transform: scale(1.03); }
     margin: 10px 0 5px 0;
     text-transform: uppercase;
 }
-
 .artist-info p {
     color: white;
     font-weight: 300;
@@ -160,23 +355,93 @@ h1:hover { transform: scale(1.03); }
 }
 
 /* RESPONSIVE */
-
 @media (max-width: 1440px) {
-    h1 { font-size: 4em; }
-    .artist-card { flex: 1 1 280px;}
+    h1 { font-size: 3.5em; }
+    .artist-card { flex: 1 1 280px; }
 }
 
 @media (max-width: 1024px) {
-    h1 { font-size: 3.5em; }
-    .artist-card { flex: 1 1 280px;}
+    .header {
+        gap: 20px;
+    }
+
+    h1 { font-size: 2.5em; }
+    .artist-card { flex: 1 1 280px; }
+
+    .search-bar input {
+        width: 250px;
+    }
 }
 
 @media (max-width: 768px) {
-    h1 { font-size: 3em; }
-    .artist-card { flex: 1 1 280px;}
+    .header {
+        gap: 10px;
+    }
+
+    h1 { font-size: 2.5em; }
+
+    .artist-card { flex: 1 1 280px; }
+
+    .search-bar {
+        display: none !important;
+    }
+
+    .option-icon {
+        display: block !important;
+    }
+
+        .placeholder-container {
+        width: 95%;
+        padding: 1.5em 1em;
+    }
+
+    .placeholder-content h3::after {
+        width: 70%;
+    }
 }
 
 @media (max-width: 480px) {
-    h1 { font-size: 2.5em; }
-    .artist-card { flex: 1 1 280px;}
+    .header {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .title-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    h1 {
+        font-size: 1.9em;
+        margin: 0;
+        display: block;
+        text-align: center;
+    }
+
+    .option-icon {
+        display: block !important;
+    }
+
+    .search-bar {
+        display: none !important;
+    }
+
+        .placeholder-container {
+        width: 100%;
+        padding: 1em;
+    }
+
+    .placeholder-content h3 {
+        font-size: clamp(1rem, 4vw, 1.5em);
+    }
+
+    .placeholder-content h3::after {
+        width: 80%;
+    }
+
+    .placeholder-image img {
+        margin-top: 30px;
+    }
 }

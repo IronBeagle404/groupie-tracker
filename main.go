@@ -6,27 +6,32 @@ import (
 	"groupie-tracker/handlers"
 	"groupie-tracker/logging"
 	"groupie-tracker/utils"
-	"log"
 	"net/http"
 	"strings"
 )
 
-// Attempt to fetch all data from API and starting server if successful
+// Initialize logging, attempt to fetch all data from API and starting server if successful
 func init() {
 	var err error
+	logging.Init()
+	logging.Logger.Print("Starting server...")
 	data.CombinedData, err = utils.FetchAllData()
 	if err != nil {
-		log.Fatalf("Failed to fetch data : %v", err)
+		logging.Logger.Printf("Failed to fetch data : %v", err)
 	}
 	if len(data.CombinedData.Artists) == 0 {
-		log.Fatal("Data was not successfully fetched during server init, closing server...")
+		logging.Logger.Print("Data was not successfully fetched during server init. Retrying...")
+		data.CombinedData, err = utils.FetchAllData()
+		if err != nil {
+			logging.Logger.Fatalf("Failed to fetch data : %v", err)
+		}
+		logging.Logger.Print("Data fetched successfully after retry")
 	}
 }
 
-// Initialize logging, handle assets, parse all templates, handle routes, and start server
+// Handle assets, parse all templates, handle routes, and start server
 func main() {
 	mux := http.NewServeMux()
-	logging.Init()
 
 	mux.Handle("/assets/static/", http.StripPrefix("/assets/static/", http.FileServer(http.Dir("assets/static"))))
 	utils.ParseTemplates()
@@ -42,6 +47,8 @@ func main() {
 	})
 	mux.HandleFunc("/healthz", handlers.HealthCheck)
 
-	logging.Logger.Print("Starting server at http://localhost:" + config.PORT)
+	mux.HandleFunc("/search", handlers.SearchHandler)
+
+	logging.Logger.Print("Server successfully started at http://localhost:" + config.PORT)
 	logging.Logger.Fatal(http.ListenAndServe(":"+config.PORT, mux))
 }
