@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Groupie-Tracker</title>
+        <link rel="stylesheet" href="/assets/static/style.css" />
+    </head>
+    <body>
+        <h1>Groupie <br /> Tracker</h1>
+        <div class="container">
+            <h2 class="subtitle">THE MOST POPULAR</h2>
+        </div>
+        <button class="discover-arrow" onclick="window.location.href='/artist/'">
+            <span class="arrow-text">DISCOVER THE<br>ARTISTS</span>
+        </button>
+
+        <div class="artists-grid">
+            <div class="artist-item">
+                <button class="artist-button" onclick="window.location.href='/artist/0'">
+                    <img src="./assets/static/image/queenimage.png" alt="Queen">
+                </button>
+                <div class="artist-info">1 - Queen</div>
+            </div>
+            <div class="artist-item">
+                <button class="artist-button" onclick="window.location.href='/artist/48'">
+                    <img src="./assets/static/image/therollingstonesimage.png" alt="The Rolling Stones">
+                </button>
+                <div class="artist-info">2 - The Rolling Stones</div>
+            </div>
+            <div class="artist-item">
+                <button class="artist-button" onclick="window.location.href='/artist/14'">
+                    <img src="./assets/static/image/ledzeppelin.png" alt="Led Zeppelin">
+                </button>
+                <div class="artist-info">3 - Led Zeppelin</div>
+            </div>
+        </div>
+    </body>
+</html>

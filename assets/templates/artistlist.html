@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Groupie-Tracker-List</title>
+        <link rel="stylesheet" href="/assets/static/artistlist.css" />
+    </head>
+    <body>
+        <div class="title-container">
+            <h1 onclick="window.location.href='/'">Groupie Tracker</h1>
+        </div>
+
+        <div class="artists-container">
+            <div class="artists-grid">
+                {{range $index, $artist := .}}
+                <div class="artist-card" onclick="window.location.href='/artist/{{$index}}'">
+                    <div class="artist-image">
+                        <img src="{{$artist.Image}}" alt="{{$artist.Name}}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+                    </div>
+                    <div class="artist-info">
+                        <h3>{{$artist.Name}}</h3>
+                    </div>
+                </div>
+                {{end}}
+            </div>
+        </div>
+    </body>
+</html>
