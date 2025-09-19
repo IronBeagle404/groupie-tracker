@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Groupie-Tracker-Error</title>
+        <link rel="stylesheet" href="/assets/static/error.css" />
+        <link rel="icon" type="image/x-icon" href="/assets/static/favicon/casque.ico">
+    </head>
+    <body>
+        <div class="error-container">
+            <div class="error-grid">
+                    <header class="error-code">
+                        <h1>Error {{.Code}}</h1>
+                    </header>
+                    <div class="error-error">
+                        <h2>{{.Error}}</h2>
+                    </div>
+                    <div class="error-image">
+                        <img src="/assets/static/image/error.png" alt="Error-logo">
+                    </div>
+                    <div class="error-message">
+                        <h3>{{.Message}}</h3>
+                    </div>
+            </div>
+        </div>
+
+        <button class="return" onclick="window.location.href='/'">
+            <span class="arrow-text">RETURN<br>HOME</span>
+        </button>
+
+</html>

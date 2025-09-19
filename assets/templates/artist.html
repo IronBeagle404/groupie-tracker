@@ -1,44 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <title>Groupie-Tracker-List</title>
-        <link rel="stylesheet" href="/assets/static/artist.css" />
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8" />
+    <title>Groupie-Tracker-Artist</title>
+    <link rel="stylesheet" href="/assets/static/artist.css" />
+    <link rel="icon" type="image/x-icon" href="/assets/static/favicon/casque.ico">
+</head>
+<body>
+    <header class="page-header">
         <h1>{{.Name}}</h1>
-        
+    </header>
+
+    <div class="main-layout">
         <div class="artist-image">
             <img src="{{.Image}}" alt="{{.Name}}">
         </div>
-        
-        <div class="info-card members-card">
-            <div class="card-header">HISTORY</div>
-            <div class="card-content">
-                <div class="info-field">Creation date : {{.CreationDate}}</div>
-                <div class="info-field">First album : {{.FirstAlbum}}</div>
+
+        <div class="middle-side">
+            <div class="info-card">
+                <div class="card-header">HISTORY</div>
+                <div class="card-content">
+                    <div class="info-field">Creation date : {{.CreationDate}}</div>
+                    <div class="info-field">First album : {{.FirstAlbum}}</div>
+                </div>
             </div>
-        </div>
 
-        <div class="image"></div>
-
-        <div class="member-card members-card">
-            <div class="member-card-header">Members</div>
-            <div class="member-card-content">
-                {{range .Members}}
+            <div class="member-card">
+                <div class="member-card-header">Members</div>
+                <div class="member-card-content">
+                    {{range .Members}}
                     <div class="member-field">{{.}}</div>
-                {{end}}
-            </div>
-        </div>
-
-        <div class="concert-card members-card">
-            <div class="concert-card-header">Concert dates</div>
-            <div class="concert-card-content">
-                <div class="concert-field">
-                    [ Beta Version ] - Coming Soon...
+                    {{end}}
                 </div>
             </div>
         </div>
-        
-    </body>
+
+        <div class="concert-side">
+            <div class="concert-card">
+                <div class="concert-card-header">Concert dates</div>
+                <div class="concert-card-content">
+                    {{range $key, $value := .Relation.DatesLocations}}
+                    <div class="concert-field">{{$key}}
+                        <ul>
+                            {{range $i, $element := $value}} <li>{{$element}}</li> {{end}}
+                        </ul>
+                    </div>
+                    {{end}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="return" onclick="window.location.href='/artist/'">
+        <span class="arrow-text">RETURN TO<br>THE LIST</span>
+    </button>
+    
+</body>
 </html>

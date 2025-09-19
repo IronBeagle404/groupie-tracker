@@ -1,4 +1,5 @@
 
+/* Import Font */
 @font-face {
     font-family: 'Agrandir';
     src: url('/assets/static/fonts/PPAgrandir-Regular.otf') format('opentype');
@@ -20,6 +21,7 @@
     font-style: normal;
 }
 
+/* Background */
 body {
     font-family: 'Agrandir', Arial, sans-serif;
     margin: 0;
@@ -37,6 +39,7 @@ body {
     text-align: center;
 }
 
+/* Title */
 h1 {
     font-family: 'Agrandir', Arial, sans-serif;
     font-weight: 900;
@@ -51,6 +54,7 @@ h1 {
     left: 200px;
 }
 
+/* Sub-title */
 .subtitle {
     font-family: 'Agrandir', Arial, sans-serif;
     font-weight: 600;
@@ -76,6 +80,7 @@ h1 {
     background-color: #FF6600;
 }
 
+/* Orange Line */
 .subtitle::before {
     content: '';
     position: absolute;
@@ -87,6 +92,7 @@ h1 {
     background-color: #FF6600;
 }
 
+/* Orange Arrow */
 .discover-arrow {
     position: absolute;
     top: 100px;
@@ -116,16 +122,19 @@ h1 {
     transform: scale(1.05);
 }
 
+/* Popular Artist Grid */
 .artists-grid {
     display: flex;
     justify-content: center;
     gap: 120px;
 }
 
+/* Simple Artist Item */
 .artist-item {
     text-align: center;
 }
 
+/* Artist Image Button */
 .artist-button {
     border: none;
     padding: 0;
@@ -156,6 +165,7 @@ h1 {
     transform: scale(1.05);
 }
 
+/* Popular Artist Name */
 .artist-info {
     padding: 20px;
     color: white;
@@ -164,6 +174,7 @@ h1 {
     text-align: center;
 }
 
+/* RESPONSIVE */
 
 @media screen and (width >= 1440px) {
     .artists-grid {
@@ -312,12 +323,13 @@ h1 {
 }
 
 @media screen and (max-width: 480px) {
-    /* Titre */
+    /* Title */
     h1 {
         font-size: 2.5em;
         margin: 30px 10px 15px 10px;
     }
     
+    /* Sub-Title */
     .subtitle {
         font-size: 1.5em;
         margin-top: 50px;
