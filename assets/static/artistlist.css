@@ -1,26 +1,20 @@
-/* Import Font */
 @font-face {
     font-family: 'Agrandir';
     src: url('/assets/static/fonts/PPAgrandir-Regular.otf') format('opentype');
     font-weight: 400;
-    font-style: normal;
 }
-
 @font-face {
     font-family: 'Agrandir';
     src: url('/assets/static/fonts/PPAgrandir-GrandHeavy.otf') format('opentype');
     font-weight: 900;
-    font-style: normal;
 }
-
 @font-face {
     font-family: 'Agrandir';
     src: url('/assets/static/fonts/PPAgrandir-GrandLight.otf') format('opentype');
     font-weight: 300;
-    font-style: normal;
 }
 
-/* Background */
+/* Body */
 body {
     font-family: 'Agrandir', Arial, sans-serif;
     margin: 0;
@@ -31,36 +25,16 @@ body {
     background-position: center;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-    width: 12px;
-}
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 12px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #FF6600; border-radius: 6px; }
+* { scrollbar-width: thin; scrollbar-color: #FF6600 transparent; }
 
-::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #FF6600;
-    border-radius: 6px;
-}
-
-/* Firefox */
-* {
-    scrollbar-width: thin;
-    scrollbar-color: #FF6600 transparent;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 50px 20px;
-    text-align: center;
-}
-
- /* Title */
+/* Header */
 .title-container {
     position: fixed;
+    text-align: center;
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
@@ -68,12 +42,10 @@ body {
 }
 
 h1 {
-    font-family: 'Agrandir', Arial, sans-serif;
     font-weight: 900;
     color: white;
     font-size: 4.5em;
-    margin: 0;
-    margin-bottom: 10px;
+    margin: 0 0 10px 0;
     text-transform: uppercase;
     letter-spacing: 2px;
     text-align: center;
@@ -83,15 +55,13 @@ h1 {
     transition: all 0.3s ease;
 }
 
-h1:hover {
-     transform: scale(1.03);
-}
+h1:hover { transform: scale(1.03); }
 
-/* Separation */
+/* Header Separation */
 .title-container::before {
     content: '';
     position: absolute;
-    bottom: -20px;
+    bottom: -10px;
     left: 50%;
     transform: translateX(-50%);
     width: calc(100vw - 150px);
@@ -102,52 +72,56 @@ h1:hover {
 .title-container::after {
     content: '';
     position: absolute;
-    bottom: -20px;
+    bottom: -10px;
     left: 50%;
     transform: translateX(-50%);
-    width: 750px;
-    height: 15px;
+    width: 600px;
+    height: 10px;
     background-color: #FF6600;
 }
 
-/* Artist List */
+/* Artist grid */
 .artists-container {
-    height: calc(100vh - 290px);
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 0;
     position: fixed;
-    top: 190px;
+    top: 220px;
     left: 50%;
     transform: translateX(-50%);
     width: 1650px;
+    max-width: 100%;
+    height: calc(100vh - 310px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
     box-sizing: border-box;
 }
 
 .artists-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 15px 15px;
-    row-gap: 50px;
-    padding: 30px 100px;
-    justify-items: center;
-    width: 100%;
-    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 50px 30px;
+    max-width: 1650px;
 }
 
+/* Artist card */
 .artist-card {
+    flex: 1 1 240px;
+    max-width: 240px;
+    height: 290px;
     background: rgba(255, 102, 0, 0.6);
     border: 2px solid #FF6600;
     border-radius: 15px;
     padding: 20px;
     text-align: center;
-    transition: all 0.3s ease;
-    width: 240px;
-    height: 290px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    transition: all 0.3s ease;
     box-sizing: border-box;
+    cursor: pointer;
 }
 
 .artist-card:hover {
@@ -157,32 +131,21 @@ h1:hover {
     box-shadow: 0 8px 25px rgba(138, 43, 226, 0.4);
 }
 
-/* Cards Elements */
+/* Card content (image) */
 .artist-image {
     width: 140px;
     height: 140px;
-    background-color: #FF6600;
-    border-radius: 10px;
     margin: 0 auto 15px auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    color: white;
-    font-size: 16px;
-    overflow: hidden;
-}
-
-.artist-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
     border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: #FF6600;
 }
 
 .artist-info h3 {
     color: white;
-    font-family: 'Agrandir', Arial, sans-serif;
     font-weight: 900;
     font-size: 16px;
     margin: 10px 0 5px 0;
@@ -191,7 +154,6 @@ h1:hover {
 
 .artist-info p {
     color: white;
-    font-family: 'Agrandir', Arial, sans-serif;
     font-weight: 300;
     font-size: 12px;
     margin: 3px 0;
@@ -199,78 +161,22 @@ h1:hover {
 
 /* RESPONSIVE */
 
-@media screen and (max-width: 1440px) {
-        h1 {
-        font-family: 'Agrandir', Arial, sans-serif;
-        font-weight: 900;
-        color: white;
-        font-size: 4em;
-        margin: 0;
-        margin-bottom: 10px;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        text-align: center;
-        white-space: nowrap;
-        cursor: pointer;
-        display: inline-block;
-        transition: all 0.3s ease;
-    }
-
-    .artists-container {
-        width: 100vw !important;
-        left: 0 !important;
-        transform: none !important;
-        padding: 0 20px;
-    }
-    
-    .artists-grid {
-        grid-template-columns: repeat(4, 1fr) !important;
-        gap: 20px 20px;
-        row-gap: 30px;
-        padding: 20px;
-        width: 100%;
-    }
-    
-    .artist-card {
-        max-width: 240px;
-        max-height: 290px;
-    }
+@media (max-width: 1440px) {
+    h1 { font-size: 4em; }
+    .artist-card { flex: 1 1 280px;}
 }
 
-@media screen and (max-width: 1024px) {
-        h1 {
-        font-family: 'Agrandir', Arial, sans-serif;
-        font-weight: 900;
-        color: white;
-        font-size: 3.5em;
-        margin: 0;
-        margin-bottom: 10px;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        text-align: center;
-        white-space: nowrap;
-        cursor: pointer;
-        display: inline-block;
-        transition: all 0.3s ease;
-    }
+@media (max-width: 1024px) {
+    h1 { font-size: 3.5em; }
+    .artist-card { flex: 1 1 280px;}
+}
 
-    .artists-container {
-        width: 100vw !important;
-        left: 0 !important;
-        transform: none !important;
-        padding: 0 20px;
-    }
-    
-    .artists-grid {
-        grid-template-columns: repeat(3, 1fr) !important;
-        gap: 20px 20px;
-        row-gap: 30px;
-        padding: 20px;
-        width: 100%;
-    }
-    
-    .artist-card {
-        max-width: 240px;
-        max-height: 290px;
-    }
+@media (max-width: 768px) {
+    h1 { font-size: 3em; }
+    .artist-card { flex: 1 1 280px;}
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 2.5em; }
+    .artist-card { flex: 1 1 280px;}
 }

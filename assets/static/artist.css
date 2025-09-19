@@ -18,7 +18,7 @@
     font-style: normal;
 }
 
-/* --- Background & reset --- */
+/* Background & Others */
 html, body {
     margin: 0;
     padding: 0;
@@ -38,53 +38,92 @@ body {
     box-sizing: border-box;
 }
 
-/* --- Title --- */
+/* Header & Title */
 .page-header {
+    position: relative;
     width: 100%;
-    text-align: center;
-    margin-top: 20px;
+    height: 150px;
+    box-sizing: border-box;
+    padding: 12px 24px;
+    background: transparent;
 }
 
-h1 {
+.page-header h1 {
+    margin: 0;
+    text-align: center;
     font-weight: 900;
     color: white;
     font-size: 4.5em;
-    margin: 20px 0 0;
-    display: inline-block;
-    position: relative;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
 
-h1::after {
-    position: absolute;
-    content: '';
-    left: 0;
+.page-header .underline {
+    width: 60%;
+    max-width: 400px;
     height: 2px;
-    bottom: -10px;
     background-color: #FF6600;
-    width: 100%;
+    margin: 10px auto 0;
 }
 
-/* --- Main Layout --- */
+/* Return Button */
+.return {
+    position: absolute;
+    left: 100px;
+    top: 60%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 30px 14px 46px;
+    font-family: 'Agrandir', Arial, sans-serif;
+    background: rgba(255, 102, 0, 0.95);
+    color: white;
+    font-weight: 700;
+    font-size: clamp(0.85em, 1.8vw, 1.05em);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    clip-path: polygon(0 50%, 40px 0, 100% 0, 100% 100%, 40px 100%);
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    border-radius: 6px;
+    z-index: 3;
+    text-decoration: none;
+    border: none;
+}
+
+.return .arrow-text {
+    display: block;
+    line-height: 1;
+    text-align: center;
+}
+
+.return:hover {
+    transform: translateY(-50%) scale(1.03);
+    background: rgba(138, 43, 226, 0.6);
+    box-shadow: 0 8px 25px rgba(138, 43, 226, 0.35);
+}
+
+/* Main Layout */
 .main-layout {
     display: flex;
     justify-content: center;
     align-items: flex-start;
     max-width: 1200px;
     gap: 40px;
-    margin: 70px auto;
+    margin: calc(50px + 20px) auto 0;
     padding: 0;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
 }
 
-/* --- Image Side --- */
+/* Image */
 .artist-image {
-    flex: 0 0 400px;
-    width: 400px;
-    max-width: 100%px;
-    aspect-ratio: 1 / 1;
-    height: 400px;
+    order: 2;
+    flex: 1 1 25%;
+    min-width: 200px;
+    max-width: 500px;
+    width: 100%;
+    aspect-ratio: 1 / 1; 
     border: 2px solid #FF6600;
     border-radius: 10px;
     overflow: hidden;
@@ -96,8 +135,9 @@ h1::after {
     object-fit: cover;
 }
 
-/* --- Middle Side (History/Members) --- */
+/* History & Members */
 .middle-side {
+    order: 1;
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -105,8 +145,9 @@ h1::after {
     max-width: 600px;
 }
 
-/* --- Right Side (Concert Dates) --- */
+/* Concert Dates */
 .concert-side {
+    order: 3;
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -114,7 +155,7 @@ h1::after {
     max-width: 600px;
 }
 
-/* --- Cards --- */
+/* Cards */
 .info-card,
 .member-card,
 .concert-card {
@@ -125,7 +166,7 @@ h1::after {
     max-width: 100%;
 }
 
-/* --- Card Header --- */
+/* Card Header */
 .card-header,
 .member-card-header,
 .concert-card-header {
@@ -141,7 +182,7 @@ h1::after {
     border-radius: 8px 8px 0 0;
 }
 
-/* --- Content History --- */
+/* Content History */
 .info-card .card-content {
     padding: 10px 20px;
     display: flex;
@@ -156,7 +197,7 @@ h1::after {
     text-align: left;
 }
 
-/* --- Content Members --- */
+/* Content Members */
 .member-card .member-card-content {
     padding: 10px 20px;
     display: grid;
@@ -171,12 +212,12 @@ h1::after {
     text-align: left;
 }
 
-/* --- Content Concert Dates --- */
+/* Content Concert Dates */
 .concert-card .concert-card-content {
     padding: 10px 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5px 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .concert-card .concert-field {
@@ -186,40 +227,84 @@ h1::after {
     text-align: left;
 }
 
-/* --- Return Button --- */
-.return {
-    display: block;
-    margin: 0 auto 0 auto;
-    background: rgba(255, 102, 0, 0.6);
-    border: 2px solid #FF6600;
-    border-radius: 15px;
-    color: white;
-    padding: 10px 30px;
-    font-family: 'Agrandir', Arial, sans-serif;
-    font-weight: 600;
-    font-size: 1em;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
+.concert-card .concert-location {
+    font-weight: 700;
+    margin-bottom: 5px;
+    text-transform: capitalize;
 }
 
-.return:hover {
-    transform: scale(1.05);
-    background: rgba(138, 43, 226, 0.6);
-    border: 2px solid #8A2BE2;
-    box-shadow: 0 8px 25px rgba(138, 43, 226, 0.4);
+.concert-card .concert-dates {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 5px 15px;
 }
 
-/* --- Responsive --- */
-@media (max-width: 1500px) {
+.concert-card .concert-date {
+    font-weight: 400;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1680px) {
+    .page-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 40px;
+        padding: 12px 24px;
+        height: auto;
+        background: transparent;
+    }
+
+    .page-header h1 {
+        position: static;
+        transform: none;
+        margin: 0;
+        font-size: 4.5em;
+        font-weight: 900;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-align: center;
+    }
+
+    .page-header .underline {
+        width: 60%;
+        height: 2px;
+        background-color: #FF6600;
+        margin: 10px 0 0;
+    }
+
+    .return {
+        position: static;
+        transform: none;
+        margin-top: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 14px 30px;
+        background: rgba(255, 102, 0, 0.95);
+        color: white;
+        font-weight: 700;
+        font-size: clamp(0.85em, 1.8vw, 1.05em);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-radius: 6px;
+        cursor: pointer;
+        text-decoration: none;
+        border: none;
+    }
+
     .main-layout {
         flex-direction: column;
         align-items: center;
         gap: 40px;
-        margin: 70px 10%;
+        margin: 20px auto 50px;
+        max-width: 100%;
     }
+
+    .artist-image { order: 1; }
+    .middle-side { order: 2; }
+    .concert-side { order: 3; }
 
     .artist-image,
     .middle-side,
@@ -235,25 +320,44 @@ h1::after {
     }
 }
 
+@media (max-width: 768px) {
+    .page-header {
+        height: auto;
+        padding: 12px;
+    }
+    .page-header h1 {
+        font-size: 2.2em;
+    }
+    .return {
+        padding: 8px 18px;
+        margin-top: 12px;
+        clip-path: polygon(0 50%, 20px 0, 100% 0, 100% 100%, 20px 100%);
+    }
+    .main-layout {
+        margin-top: 20px;
+    }
+}
+
 @media (min-width: 425px) {
     .main-layout {
         gap: 60px;
-    }
-
-    .middle-side,
-    .concert-side {
-        min-width: 510px;
-        gap: 50px;
-    }
-
-    .concert-card {
-        min-width: 510px;
+        flex-wrap: nowrap;
     }
 
     .artist-image {
         width: 500px;
         height: 500px;
         flex: 0 0 500px;
+    }
+
+    .middle-side,
+    .concert-side {
+        gap: 50px;
+        min-width: 510px;
+    }
+
+    .concert-card {
+        min-width: 510px;
     }
 
     h1 {

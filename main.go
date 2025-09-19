@@ -2,26 +2,46 @@ package main
 
 import (
 	"groupie-tracker/config"
+	"groupie-tracker/data"
 	"groupie-tracker/handlers"
+	"groupie-tracker/logging"
 	"groupie-tracker/utils"
 	"log"
 	"net/http"
+	"strings"
 )
 
-// Fetch all data from API before starting server
+// Attempt to fetch all data from API and starting server if successful
 func init() {
-	utils.FetchAllData()
+	var err error
+	data.CombinedData, err = utils.FetchAllData()
+	if err != nil {
+		log.Fatalf("Failed to fetch data : %v", err)
+	}
+	if len(data.CombinedData.Artists) == 0 {
+		log.Fatal("Data was not successfully fetched during server init, closing server...")
+	}
 }
 
-// Start and run server
+// Initialize logging, handle assets, parse all templates, handle routes, and start server
 func main() {
-	log.Print("Starting server at http://localhost:" + config.PORT)
-	http.Handle("/assets/static/", http.StripPrefix("/assets/static/", http.FileServer(http.Dir("assets/static"))))
+	mux := http.NewServeMux()
+	logging.Init()
 
+	mux.Handle("/assets/static/", http.StripPrefix("/assets/static/", http.FileServer(http.Dir("assets/static"))))
 	utils.ParseTemplates()
 
-	http.HandleFunc("/", handlers.HomeHandler)
-	http.HandleFunc("/artist/", handlers.ArtistHandler)
+	mux.HandleFunc("/", handlers.HomeHandler)
+	mux.HandleFunc("/artist/", func(w http.ResponseWriter, r *http.Request) {
+		id := strings.TrimPrefix(r.URL.Path, "/artist/")
+		if id == "" {
+			handlers.ArtistListHandler(w, r)
+			return
+		}
+		handlers.ArtistHandler(w, r)
+	})
+	mux.HandleFunc("/healthz", handlers.HealthCheck)
 
-	log.Fatal(http.ListenAndServe(":"+config.PORT, nil))
+	logging.Logger.Print("Starting server at http://localhost:" + config.PORT)
+	logging.Logger.Fatal(http.ListenAndServe(":"+config.PORT, mux))
 }

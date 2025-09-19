@@ -2,50 +2,102 @@ package utils
 
 import (
 	"encoding/json"
+	"fmt"
 	"groupie-tracker/config"
 	"groupie-tracker/data"
+	"groupie-tracker/models"
 	"log"
 	"net/http"
-	"strconv"
+	"sync"
 	"text/template"
 )
 
 // Fetch all data from API
-func FetchAllData() {
-	fetchData := func(endpoint string, dest interface{}) error {
-		res, err := http.Get(config.API_URL + endpoint)
-		if err != nil {
-			return err
+func FetchAllData() (models.CombinedData, error) {
+	var (
+		wg  sync.WaitGroup
+		err error
+	)
+
+	fetchData := func(endpoint string, dest interface{}) {
+		defer wg.Done()
+		res, _ := http.Get(config.API_URL + endpoint)
+		if res.StatusCode != http.StatusOK {
+			err = fmt.Errorf("API returned status code %d", res.StatusCode)
+			return
 		}
 		defer res.Body.Close()
 
-		return json.NewDecoder(res.Body).Decode(dest)
+		json.NewDecoder(res.Body).Decode(dest)
 	}
-	fetchData("/artists", &data.Artists)
-	// fetch locations
-	for x, artist := range data.Artists {
-		var location data.Location
-		fetchData("/locations/"+strconv.Itoa(artist.Id), &location)
-		data.Artists[x].Location = location
+
+	wg.Add(4)
+	go fetchData("/artists", &data.Artists)
+	go fetchData("/locations", &data.Locations)
+	go fetchData("/dates", &data.Dates)
+	go fetchData("/relation", &data.Relations)
+	wg.Wait()
+
+	if err != nil {
+		return models.CombinedData{}, err
 	}
-	// fetch dates
-	for x, artist := range data.Artists {
-		var dates data.Dates
-		fetchData("/dates/"+strconv.Itoa(artist.Id), &dates)
-		data.Artists[x].Date = dates
-	}
-	// fetch relations
-	for x, artist := range data.Artists {
-		var relation data.Relations
-		fetchData("/relation/"+strconv.Itoa(artist.Id), &relation)
-		data.Artists[x].Relation = relation
-	}
+
+	return models.CombinedData{
+		Artists:   data.Artists,
+		Locations: data.Locations.Index,
+		Dates:     data.Dates.Index,
+		Relations: data.Relations.Index,
+	}, nil
 }
 
 func ParseTemplates() {
 	var err error
-	data.Templates, err = template.ParseGlob("./assets/templates/*.html")
+	funcMap := template.FuncMap{
+		"add": func(a, b int) int { return a + b },
+	}
+	data.Templates, err = template.New("").Funcs(funcMap).ParseGlob("./assets/templates/*.html")
 	if err != nil {
 		log.Printf("Error parsing templates : %v", err)
 	}
+}
+
+func FetchArtist(id int) models.Artist {
+	var artist models.Artist
+
+	for _, v := range data.Artists {
+		if v.Id == id {
+			artist.Id = v.Id
+			artist.CreationDate = v.CreationDate
+			artist.FirstAlbum = v.FirstAlbum
+			artist.Image = v.Image
+			artist.Members = v.Members
+			artist.Name = v.Name
+		}
+	}
+
+	var location models.Location
+	for _, loc := range data.Locations.Index {
+		if loc.Id == id {
+			location.Locations = loc.Locations
+		}
+	}
+
+	var date models.Date
+	for _, d := range data.Dates.Index {
+		if d.Id == id {
+			date.Dates = d.Dates
+		}
+	}
+
+	var relation models.Relation
+	for _, rel := range data.Relations.Index {
+		if rel.Id == id {
+			relation.DatesLocations = rel.DatesLocations
+		}
+	}
+
+	artist.Location = location
+	artist.Date = date
+	artist.Relation = relation
+	return artist
 }

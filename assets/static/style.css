@@ -1,108 +1,60 @@
-
-/* Import Font */
 @font-face {
     font-family: 'Agrandir';
     src: url('/assets/static/fonts/PPAgrandir-Regular.otf') format('opentype');
     font-weight: 400;
-    font-style: normal;
 }
-
 @font-face {
     font-family: 'Agrandir';
     src: url('/assets/static/fonts/PPAgrandir-GrandHeavy.otf') format('opentype');
     font-weight: 900;
-    font-style: normal;
 }
-
 @font-face {
     font-family: 'Agrandir';
     src: url('/assets/static/fonts/PPAgrandir-GrandLight.otf') format('opentype');
     font-weight: 300;
-    font-style: normal;
 }
 
-/* Background */
+/* Body */
 body {
     font-family: 'Agrandir', Arial, sans-serif;
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    background-image: url('/assets/static/image/background.png');
-    background-size: cover;
-    background-position: center;
+    background: url('/assets/static/image/background.png') center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 50px 20px;
-    text-align: center;
+/* Header (for title and discover arrow) */
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1700px;
+    padding: 60px 30px 20px 30px;
+    box-sizing: border-box;
 }
 
 /* Title */
 h1 {
-    font-family: 'Agrandir', Arial, sans-serif;
     font-weight: 900;
     color: white;
-    font-size: 4.5em;
+    font-size: clamp(2.5em, 6vw, 4.5em);
     margin: 0;
-    margin-bottom: 10px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    position: absolute;
-    top: 50px;
-    left: 200px;
 }
 
-/* Sub-title */
-.subtitle {
-    font-family: 'Agrandir', Arial, sans-serif;
-    font-weight: 600;
-    color: white;
-    font-size: 2em;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-align: center;
-    margin-top: 300px;
-    margin-bottom: 50px;
-    position: relative;
-    font-stretch: condensed;
-}
-
-.subtitle::after {
-    content: '';
-    position: absolute;
-    bottom: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 45%;
-    height: 10px;
-    background-color: #FF6600;
-}
-
-/* Orange Line */
-.subtitle::before {
-    content: '';
-    position: absolute;
-    bottom: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100vw - 400px);
-    height: 2px;
-    background-color: #FF6600;
-}
-
-/* Orange Arrow */
+/* Discover button */
 .discover-arrow {
-    position: absolute;
-    top: 100px;
-    right: 200px;
-    background-color: #FF6600;
-    color: white;
-    padding: 20px 50px 20px 25px;
     font-family: 'Agrandir', Arial, sans-serif;
-    font-weight: 600;
-    font-size: 1.2em;
+    background: rgba(255, 102, 0, 0.637);
+    color: white;
+    padding: 15px 55px 15px 25px;
+    font-weight: 700;
+    font-size: clamp(1em, 2.5vw, 1.2em);
     text-transform: uppercase;
     letter-spacing: 1px;
     clip-path: polygon(0 0, calc(100% - 40px) 0, 100% 50%, calc(100% - 40px) 100%, 0 100%);
@@ -110,11 +62,7 @@ h1 {
     transition: all 0.3s ease;
     border: none;
     outline: none;
-    box-shadow: none;
-}
-
-.arrow-text {
-    line-height: 1.2;
+    text-decoration: none;
 }
 
 .discover-arrow:hover {
@@ -122,38 +70,83 @@ h1 {
     transform: scale(1.05);
 }
 
-/* Popular Artist Grid */
-.artists-grid {
-    display: flex;
-    justify-content: center;
-    gap: 120px;
+.arrow-text {
+    line-height: 1.2;
 }
 
-/* Simple Artist Item */
+/* Subtitle */
+.subtitle {
+    font-weight: 600;
+    color: white;
+    font-size: clamp(1.5em, 3vw, 2em);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    margin-top: 100px;
+    position: relative;
+    font-stretch: condensed;
+}
+
+.subtitle::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 10px;
+    background-color: #FF6600;
+}
+
+.subtitle::before {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(200% - 10px);
+    height: 2px;
+    background-color: #FF6600;
+}
+
+/* Artist grid */
+.artists-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 120px;
+    padding: 0 50px;
+    margin-top: 40px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .artist-item {
+    flex: 1 1 300px;
+    max-width: 450px;
     text-align: center;
 }
 
-/* Artist Image Button */
 .artist-button {
     border: none;
     padding: 0;
     background: none;
     cursor: pointer;
-    width: 450px;
-    height: 300px;
+    width: 100%;
+    aspect-ratio: 3 / 2;
     display: block;
     margin: 0 auto;
     transition: all 0.3s ease;
     overflow: hidden;
+    text-decoration: none;
 }
 
 .artist-button img {
     width: 100%;
     height: 100%;
     display: block;
-    transition: all 0.3s ease;
     object-fit: cover;
+    transition: all 0.3s ease;
 }
 
 .artist-button:hover {
@@ -165,7 +158,6 @@ h1 {
     transform: scale(1.05);
 }
 
-/* Popular Artist Name */
 .artist-info {
     padding: 20px;
     color: white;
@@ -176,180 +168,60 @@ h1 {
 
 /* RESPONSIVE */
 
-@media screen and (width >= 1440px) {
-    .artists-grid {
-        gap: 110px;
-    }
-    
-    .artist-button {
-        width: 380px;
-        height: 253px;
-    }
-}
-
-@media screen and (max-width: 1100px) {
-    .artists-grid {
-        gap: 60px;
-    }
-    
-    .artist-button {
-        width: 320px;
-        height: 213px;
-    }
-}
-
-@media screen and (max-width: 1024px) {
-    h1 {
-        position: static !important;
-        font-size: 4em;
-        text-align: center;
-        margin: 30px 20px 20px 20px;
-    }
-    
-    .discover-arrow {
-        position: static !important;
-        margin: 30px auto 40px auto;
-        display: block;
-        width: fit-content;
-    }
-
-    .subtitle {
-        font-family: 'Agrandir', Arial, sans-serif;
-        font-weight: 600;
-        color: white;
-        font-size: 2em;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        text-align: center;
-        margin-top: 100px;
-        margin-bottom: 10px;
-        position: relative;
-        font-stretch: condensed;
-    }
-
-    .subtitle::after {
-        content: '';
-        position: absolute;
-        bottom: -20px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 45%;
-        height: 10px;
-        background-color: #FF6600;
-    }
-
-    .subtitle::before {
-        content: '';
-        position: absolute;
-        bottom: -20px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: calc(100vw - 400px);
-        height: 2px;
-        background-color: #FF6600;
-    }
-    
-    .artists-grid {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: auto auto;
-        gap: 40px;
-        justify-items: center;
-        align-items: end;
-        max-width: 800px;
-        margin: 60px auto 0;
-        padding: 0 20px;
-    }
-    
-    .artist-item:nth-child(2) {
-        grid-column: 1;
-        grid-row: 2;
-    }
-    
-    .artist-item:nth-child(1) {
-        grid-column: 2;
-        grid-row: 1;
-    }
-    
-    .artist-item:nth-child(3) {
-        grid-column: 3;
-        grid-row: 2;
-    }
-    
-    .artist-button {
-        width: 250px;
-        height: 167px;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    h1 {
-        position: static !important;
-        font-size: 3em;
-        text-align: center;
-        margin: 30px 20px 20px 20px;
-    }
-    
-    .discover-arrow {
-        position: static !important;
-        margin: 30px auto 40px auto;
-        display: block;
-        width: fit-content;
-    }
-    
-    .artists-grid {
-        display: flex !important;
+@media (max-width: 1024px) {
+    .header-section {
         flex-direction: column;
         align-items: center;
-        gap: 30px;
-        max-width: none;
+        gap: 40px;
+        padding: 30px 20px 0 20px;
     }
-    
-    .artist-item:nth-child(1),
-    .artist-item:nth-child(2),
-    .artist-item:nth-child(3) {
-        grid-column: unset;
-        grid-row: unset;
+    .subtitle {
+        margin-top: 50px;
     }
-    
-    .artist-button {
-        width: 300px;
-        height: 200px;
-    }
-    
+
     .subtitle::before {
-        width: calc(100vw - 60px);
+        width: calc(150% - 10px);
     }
 }
 
-@media screen and (max-width: 480px) {
-    /* Title */
-    h1 {
-        font-size: 2.5em;
-        margin: 30px 10px 15px 10px;
+/* Tablet */
+@media (max-width: 768px) {
+    .artists-grid {
+        gap: 40px;
     }
-    
-    /* Sub-Title */
+    .artist-item {
+        flex: 1 1 80%;
+    }
     .subtitle {
-        font-size: 1.5em;
-        margin-top: 50px;
+        font-size: clamp(1.2em, 4vw, 1.5em);
     }
-    
-    .artist-button {
-        width: 280px;
-        height: 187px;
-    }
-    
-    .artist-info {
-        font-size: 1.3em;
-        padding: 15px;
-    }
-    
     .subtitle::before {
-        width: calc(100vw - 40px);
+        width: calc(100% - 20px);
     }
-    
     .subtitle::after {
-        width: 250px;
+        width: 60%;
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    h1 {
+        font-size: clamp(2em, 5vw, 3em);
+    }
+    .subtitle {
+        font-size: clamp(1.2em, 4vw, 1.5em);
+    }
+    .artists-grid {
+        padding: 0 15px;
+        gap: 30px;
+    }
+    .artist-item {
+        flex: 1 1 100%;
+    }
+    .subtitle::before {
+        width: calc(100% - 20px);
+    }
+    .subtitle::after {
+        width: 60%;
     }
 }
