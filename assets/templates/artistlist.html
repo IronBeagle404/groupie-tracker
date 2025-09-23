@@ -1,60 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Groupie Tracker</title>
-        <link rel="stylesheet" href="/assets/static/artistlist.css" />
-        <link rel="icon" type="image/x-icon" href="/assets/static/favicon/casque.ico">
-    </head>
-    <body>
-        <div class="header">
-            <div class="title-container">
-                <h1 onclick="window.location.href='/'">Groupie Tracker</h1>
-            </div>
-
-            <datalist id="suggestions-dl">
-                {{range .For_Search.Artists}}
-                    <option value="{{.Name}}" data-type="Name">Name</option>
-                {{end}}
-                {{range .For_Search.Artists}}
-                    <option value="{{.FirstAlbum}}" data-type="First Album">First Album</option>
-                    <option value="{{.CreationDate}}" data-type="Creation Date">Creation Date</option>
-                    {{range .Members}}
-                        <option value="{{.}}" data-type="Member">Member</option>
-                    {{end}}
-                {{end}}
-                {{range .For_Search.Locations}}
-                    {{range .Locations}}
-                        <option value="{{.}}" data-type="Location">Location</option>
-                    {{end}}
-                {{end}}
-            </datalist>
-
-            <div class="search-bar">
-                <form action="/search" method="get">
-                    <input type="text" name="Search" id="search" placeholder="Search..." list="suggestions-dl">
-                    <button type="submit">Search</button>
-                </form>
-            </div>
-            
-            <div class="option-icon" onclick="toggleSearchModal()">
-                <img src="/assets/static/image/option.png" alt="menu">
-            </div>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groupie Tracker</title>
+    <link rel="stylesheet" href="/assets/static/artistlist.css" />
+    <link rel="icon" type="image/x-icon" href="/assets/static/favicon/casque.ico">
+</head>
+<body>
+    <div class="header">
+        <div class="title-container">
+            <h1 onclick="window.location.href='/'">Groupie Tracker</h1>
         </div>
 
-        <div id="overlay" class="overlay">
-            <div class="modal">
-                <form action="/search" method="get">
-                    <input type="text" name="Search" placeholder="Search..." list="suggestions-dl">
-                    <button type="submit">Search</button>
-                </form>
-            </div>
-        </div>  
+        <datalist id="suggestions-dl">
+            {{range .For_Search.Artists}}
+                <option value="{{.Name}}" data-type="Name">Name</option>
+            {{end}}
+            {{range .For_Search.Artists}}
+                <option value="{{.FirstAlbum}}" data-type="First Album">First Album</option>
+                <option value="{{.CreationDate}}" data-type="Creation Date">Creation Date</option>
+                {{range .Members}}
+                    <option value="{{.}}" data-type="Member">Member</option>
+                {{end}}
+            {{end}}
+            {{range .For_Search.Locations}}
+                {{range .Locations}}
+                    <option value="{{.}}" data-type="Location">Location</option>
+                {{end}}
+            {{end}}
+        </datalist>
 
+        <div class="search-bar">
+            <form action="/search" method="get">
+                <input type="text" name="Search" id="search" placeholder="Search..." list="suggestions-dl">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        
+        <div class="option-icon" onclick="toggleSearchModal()">
+            <img src="/assets/static/image/option.png" alt="menu">
+        </div>
+    </div>
+
+    <div id="overlay" class="overlay">
+        <div class="modal">
+            <form action="/search" method="get">
+                <input type="text" name="Search" placeholder="Search..." list="suggestions-dl">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </div>  
+
+    <div class="main-container">
+        <aside class="filters">
+            <form action="/filter", method="get">
+                <div class="filter-block">
+                    <h3>Members</h3>
+                    <div class="filter-group">
+                        <label><input type="checkbox" name="members" value="1"> 1</label>
+                        <label><input type="checkbox" name="members" value="2"> 2</label>
+                        <label><input type="checkbox" name="members" value="3"> 3</label>
+                        <label><input type="checkbox" name="members" value="4"> 4</label>
+                        <label><input type="checkbox" name="members" value="5"> 5</label>
+                        <label><input type="checkbox" name="members" value="6"> 6</label>
+                        <label><input type="checkbox" name="members" value="7"> 7</label>
+                        <label><input type="checkbox" name="members" value="8"> 8</label>
+                    </div>
+                </div>
+
+                <div class="filter-block">
+                    <h3>First Album Date</h3>
+                    <div class="date-range">
+                        <input type="number" name="FirstAlbumStart" placeholder="Range Start" min="1945" max="2025">
+                        <input type="number" name="FirstAlbumEnd" placeholder="Range End" min="1945" max="2025">
+                    </div>
+                </div>
+
+                <div class="filter-block">
+                    <h3>Creation Date</h3>
+                    <div class="date-range">
+                        <input type="number" name="CreationDateStart" placeholder="Range Start" min="1945" max="2025">
+                        <input type="number" name="CreationDateEnd" placeholder="Range End" min="1945" max="2025">
+                    </div>
+                </div>
+
+                <div class="filter-block">
+                    <h3>Location</h3>
+                    <select name="location" id="location" >
+                    <option value="">-- Select Location --</option>
+                    {{range .For_Search.Locations}}
+                        {{range .Locations}}
+                            <option value="{{.}}">{{.}}</option>
+                        {{end}}
+                    {{end}}
+                    </select>
+                </div>
+
+                <button type="submit" class="apply-filter">Apply Filter</button>
+            </form>
+        </aside>
 
         <div class="artists-container">
-
             {{if not .To_Display.Artists}}
                 <div class="placeholder-container">
                     <div class="placeholder-content">
@@ -63,7 +110,7 @@
                             <img src="/assets/static/image/loupe.png" alt="micro">
                         </div>
                         <button class="return" onclick="window.location.href='/artist/'">
-                            <span class="arrow-text">RETURN TO<br>THE LIST</span>
+                            <span class="arrow-text">REFRESH</span>
                         </button>
                     </div>
                 </div>
@@ -81,10 +128,11 @@
                 </div>
                 {{end}}
             </div>
-        </div> 
+        </div>
+    </div>
 
-        <script src="/assets/static/js/overlay.js"></script>
-        <script src="/assets/static/js/datalist-switch.js"></script>
-        <script src="/assets/static/js/display.js"></script>
+    <script src="/assets/static/js/overlay.js"></script>
+    <script src="/assets/static/js/datalist-switch.js"></script>
+    <script src="/assets/static/js/display.js"></script>
 </body>
 </html>

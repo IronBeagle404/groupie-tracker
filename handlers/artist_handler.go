@@ -13,6 +13,12 @@ import (
 
 // Display list of all artists in the API
 func ArtistListHandler(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method != http.MethodGet {
+		ErrorHandler(w, r, 405, "Method Not Allowed : Use GET")
+		return
+	}
+
 	tmpl := data.Templates.Lookup("artistlist.html")
 	if tmpl == nil {
 		ErrorHandler(w, r, 500, "Template not found")

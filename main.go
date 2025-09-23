@@ -46,8 +46,8 @@ func main() {
 		handlers.ArtistHandler(w, r)
 	})
 	mux.HandleFunc("/healthz", handlers.HealthCheck)
-
 	mux.HandleFunc("/search", handlers.SearchHandler)
+	mux.HandleFunc("/filter", handlers.FilterHandler)
 
 	logging.Logger.Print("Server successfully started at http://localhost:" + config.PORT)
 	logging.Logger.Fatal(http.ListenAndServe(":"+config.PORT, mux))
