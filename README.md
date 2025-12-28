@@ -32,17 +32,6 @@ Groupie Tracker est une application web qui permet de découvrir et d'explorer d
 - **Recherche :** Trouvez rapidement des artistes par nom, album, date de création, etc.
 - **Filtrage :** Filtrez les artistes par critères comme le nombre de membres, l'année de création, ou le premier album.
 
-## Aperçu
-
-### Capture d'écran de l'accueil :
-![Accueil de Groupie Tracker](assets/static/image/homepage_screenshot.png) *(Ajoutez une capture d'écran du site ici)*
-
-### Page détaillée d'un artiste :
-![Page artiste de Groupie Tracker](assets/static/image/artist_screenshot.png)
-
-### Exemple de grille d'artistes filtrés :
-![Grille des artistes](assets/static/image/filtered_artists_screenshot.png)
-
 ## Technologies utilisées
 
 ### Backend
@@ -102,29 +91,6 @@ go mod init groupie-tracker
    ```
    http://localhost:8080
    ```
-
-## Contribution
-
-Les contributions sont les bienvenues ! Voici comment contribuer :
-1. Forkez le repository.
-2. Créez une branche pour vos modifications :
-   ```bash
-   git checkout -b feature/ma-fonctionnalite
-   ```
-3. Effectuez vos changements et poussez la branche :
-   ```bash
-   git push origin feature/ma-fonctionnalite
-   ```
-4. Ouvrez une Pull Request pour revue !
-
-## Problèmes connus
-- Les filtres multi-critères peuvent être ralentis lorsque de grands ensembles de données sont récupérés.
-- La gestion des sessions utilisateurs et des cookies n’est pas encore implémentée.
-
-## Licence
-
-Ce projet n'a pas encore de licence explicite. Si ajouté, veillez à respecter les règles associées.
-
 ---
 
 ## Auteur
